@@ -6,16 +6,26 @@ import { MdDeleteForever } from "react-icons/md";
 function App() {
   const [titles, setTitles] = useState([]);
   const [newTitle, setNewTitle] = useState("");
+  const [contentsArray, setContentsArray] = useState([]);
+  const [newContent, setNewContent] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setTitles((titlesArray) => [...titlesArray, newTitle]);
+    setTitles((titlesArray) => [...titlesArray, newTitle.trim()]);
     setNewTitle("");
+
+    setContentsArray((contentsArray) => [...contentsArray, newContent.trim()]);
+    setNewContent("");
   };
 
   const deleteItem = (itemIndex) => {
-    setTitles(titlesArray => titlesArray.filter((_, index) => index !== itemIndex));
+    setTitles((titlesArray) =>
+      titlesArray.filter((_, index) => index !== itemIndex)
+    );
+    setContentsArray((contentsArray) =>
+      contentsArray.filter((_, index) => index !== itemIndex)
+    );
   };
 
   return (
@@ -32,16 +42,34 @@ function App() {
               onChange={(e) => setNewTitle(e.target.value)}
               required
             />
-            <button>Submit</button>
           </div>
+          <div className="form-element content">
+            <label htmlFor="content">Contenuto</label>
+            <textarea
+              name="content"
+              id="content"
+              cols="30"
+              rows="10"
+              value={newContent}
+              onChange={(e) => setNewContent(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <button type="submit">Submit</button>
         </form>
         <div className="title-container">
-          I titoli sono:
-          <ul className="list">
+          <h3>I titoli sono:</h3>
+          <div className="list">
             {titles.map((title, index) => (
-              <li key={index}>{title} <MdDeleteForever onClick={() => deleteItem(index)} /></li>
+              <div key={index} className="item-container">
+                <h4>
+                  {title} 
+                  <MdDeleteForever onClick={() => deleteItem(index)} />
+                </h4>
+                <p>{contentsArray[index]}</p>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
     </>
