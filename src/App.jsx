@@ -6,8 +6,8 @@ export default function App() {
   const [titles, setTitles] = useState([]);
   const [contentsArray, setContentsArray] = useState([]);
   const defaultTitleData = {
-    title: '',
-    content: ''
+    title: "",
+    content: "",
   };
   const [titleData, setTitleData] = useState(defaultTitleData);
 
@@ -42,11 +42,13 @@ export default function App() {
       <section className="form-section">
         <form onSubmit={handleSubmit}>
           <div className="form-element">
-            <label htmlFor="title" className="title">Titolo Post</label>
+            <label htmlFor="title" className="title">
+              Titolo Post
+            </label>
             <input
               type="text"
               value={titleData.title}
-              onChange={(e) => changeTitleData('title', e.target.value)}
+              onChange={(e) => changeTitleData("title", e.target.value)}
               required
             />
           </div>
@@ -58,26 +60,30 @@ export default function App() {
               cols="30"
               rows="10"
               value={titleData.content}
-              onChange={(e) => changeTitleData('content', e.target.value)}
+              onChange={(e) => changeTitleData("content", e.target.value)}
               required
             ></textarea>
           </div>
           <button type="submit">Submit</button>
         </form>
         <div className="title-container">
-          <h2>I titoli sono:</h2>
-          <section className="list">
-            {titles.map((title, index) => (
-              <article key={`title${index}`} className="title-item">
-                <Title
-                  title={title}
-                  onUpdate={(newTitle) => updateTitle(index, newTitle)}
-                  onDelete={() => removeTitle(index)}
-                />
-                <p>{contentsArray[index]}</p>
-              </article>
-            ))}
-          </section>
+          {titles.length > 0 && (
+            <>
+              <h2>I titoli sono:</h2>
+              <section className="list">
+                {titles.map((title, index) => (
+                  <article key={`title${index}`} className="title-item">
+                    <Title
+                      title={title}
+                      onUpdate={(newTitle) => updateTitle(index, newTitle)}
+                      onDelete={() => removeTitle(index)}
+                    />
+                    <p>{contentsArray[index]}</p>
+                  </article>
+                ))}
+              </section>
+            </>
+          )}
         </div>
       </section>
     </>
