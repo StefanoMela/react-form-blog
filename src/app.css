@@ -1,0 +1,27 @@
+.form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 4rem;
+}
+
+.title {
+    font-weight: bold;
+    margin-right: .4rem;
+}
+
+.title-container {
+    margin-top: .5rem;
+    li {
+        margin: .3rem 0;
+
+        font-weight: bold;
+
+        letter-spacing: .4px;
+
+        cursor: pointer;
+
+    }
+}
