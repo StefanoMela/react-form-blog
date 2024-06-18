@@ -1,0 +1,37 @@
+.btn-container{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.update-button {
+  background-color: #28a745;
+}
+
+.update-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.edit-button {
+  background-color: #007bff;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}

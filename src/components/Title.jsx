@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import './buttons.css';
+
 export default function Title({ title, onUpdate, onDelete }) {
   const [newValue, setNewValue] = useState(title);
   const [isEditing, setIsEditing] = useState(false);
@@ -10,7 +12,7 @@ export default function Title({ title, onUpdate, onDelete }) {
   };
 
   return (
-    <li>
+    <header>
       {isEditing ? (
         <>
           <input
@@ -18,16 +20,20 @@ export default function Title({ title, onUpdate, onDelete }) {
             value={newValue}
             onChange={(e) => setNewValue(e.target.value)}
           />
-          <button onClick={handleUpdate}>Update</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
+          <div className="btn-container">
+          <button className="update-button" onClick={handleUpdate}>Update</button>
+          <button className="cancel-button" onClick={() => setIsEditing(false)}>Cancel</button>
+          </div>
         </>
       ) : (
         <>
-          <span>{title}</span>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-          <button onClick={onDelete}>Delete</button>
+          <h3>{title}</h3>
+          <div className="btn-container">
+          <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
+          <button className="delete-button" onClick={onDelete}>Delete</button>
+          </div>
         </>
       )}
-    </li>
+    </header>
   );
 }

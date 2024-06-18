@@ -66,19 +66,18 @@ export default function App() {
         </form>
         <div className="title-container">
           <h2>I titoli sono:</h2>
-          <ul className="list">
+          <section className="list">
             {titles.map((title, index) => (
-              <Title
-                key={`title${index}`}
-                title={title}
-                onUpdate={(newTitle) => updateTitle(index, newTitle)}
-                onDelete={() => removeTitle(index)}
-              />
+              <article key={`title${index}`} className="title-item">
+                <Title
+                  title={title}
+                  onUpdate={(newTitle) => updateTitle(index, newTitle)}
+                  onDelete={() => removeTitle(index)}
+                />
+                <p>{contentsArray[index]}</p>
+              </article>
             ))}
-            {contentsArray.map((content, index) => (
-              <p key={`content${index}`}>{content}</p>
-            ))}
-          </ul>
+          </section>
         </div>
       </section>
     </>
