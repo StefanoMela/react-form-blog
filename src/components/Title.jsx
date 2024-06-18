@@ -1,26 +1,33 @@
 import { useState } from "react";
 
-export default function({title, onUpdate, onDelete}) {
+export default function Title({ title, onUpdate, onDelete }) {
+  const [newValue, setNewValue] = useState(title);
+  const [isEditing, setIsEditing] = useState(false);
 
-    const [newValue, setnewValue] = useState(title);
+  const handleUpdate = () => {
+    onUpdate(newValue);
+    setIsEditing(false);
+  };
 
-    return (
-        <li>
-            <input
-                type="text"
-                value={newValue}
-                onChange={e => setnewValue(e.target.value)}
-            />
-            <button
-                onClick={() => onUpdate(newValue)}
-            >
-                Update
-            </button>
-            <button
-                onClick={onDelete}
-            >
-                Delete
-            </button>
-        </li>
-    )
+  return (
+    <li>
+      {isEditing ? (
+        <>
+          <input
+            type="text"
+            value={newValue}
+            onChange={(e) => setNewValue(e.target.value)}
+          />
+          <button onClick={handleUpdate}>Update</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <span>{title}</span>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={onDelete}>Delete</button>
+        </>
+      )}
+    </li>
+  );
 }

@@ -1,31 +1,40 @@
 import { useState } from "react";
+import Title from "./components/Title";
 import "/src/app.css";
 
-import { MdDeleteForever } from "react-icons/md";
-
-function App() {
+export default function App() {
   const [titles, setTitles] = useState([]);
-  const [newTitle, setNewTitle] = useState("");
   const [contentsArray, setContentsArray] = useState([]);
-  const [newContent, setNewContent] = useState("");
+  const defaultTitleData = {
+    title: '',
+    content: ''
+  };
+  const [titleData, setTitleData] = useState(defaultTitleData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    setTitles((titlesArray) => [...titlesArray, newTitle.trim()]);
-    setNewTitle("");
-
-    setContentsArray((contentsArray) => [...contentsArray, newContent.trim()]);
-    setNewContent("");
+    setTitles((titlesArray) => [...titlesArray, titleData.title]);
+    setContentsArray((contentsArray) => [...contentsArray, titleData.content]);
+    setTitleData(defaultTitleData);
   };
 
-  const deleteItem = (itemIndex) => {
+  const removeTitle = (indexToRemove) => {
     setTitles((titlesArray) =>
-      titlesArray.filter((_, index) => index !== itemIndex)
+      titlesArray.filter((_, i) => i !== indexToRemove)
     );
     setContentsArray((contentsArray) =>
-      contentsArray.filter((_, index) => index !== itemIndex)
+      contentsArray.filter((_, i) => i !== indexToRemove)
     );
+  };
+
+  const updateTitle = (index, newTitle) => {
+    setTitles((titlesArray) =>
+      titlesArray.map((title, i) => (i === index ? newTitle : title))
+    );
+  };
+
+  const changeTitleData = (key, newValue) => {
+    setTitleData((data) => ({ ...data, [key]: newValue }));
   };
 
   return (
@@ -33,13 +42,11 @@ function App() {
       <section className="form-section">
         <form onSubmit={handleSubmit}>
           <div className="form-element">
-            <label htmlFor="title" className="title">
-              Titolo Post
-            </label>
+            <label htmlFor="title" className="title">Titolo Post</label>
             <input
               type="text"
-              value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
+              value={titleData.title}
+              onChange={(e) => changeTitleData('title', e.target.value)}
               required
             />
           </div>
@@ -50,30 +57,30 @@ function App() {
               id="content"
               cols="30"
               rows="10"
-              value={newContent}
-              onChange={(e) => setNewContent(e.target.value)}
+              value={titleData.content}
+              onChange={(e) => changeTitleData('content', e.target.value)}
               required
             ></textarea>
           </div>
           <button type="submit">Submit</button>
         </form>
         <div className="title-container">
-          <h3>I titoli sono:</h3>
-          <div className="list">
+          <h2>I titoli sono:</h2>
+          <ul className="list">
             {titles.map((title, index) => (
-              <div key={index} className="item-container">
-                <h4>
-                  {title} 
-                  <MdDeleteForever onClick={() => deleteItem(index)} />
-                </h4>
-                <p>{contentsArray[index]}</p>
-              </div>
+              <Title
+                key={`title${index}`}
+                title={title}
+                onUpdate={(newTitle) => updateTitle(index, newTitle)}
+                onDelete={() => removeTitle(index)}
+              />
             ))}
-          </div>
+            {contentsArray.map((content, index) => (
+              <p key={`content${index}`}>{content}</p>
+            ))}
+          </ul>
         </div>
       </section>
     </>
   );
 }
-
-export default App;
