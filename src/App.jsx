@@ -13,8 +13,8 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTitles((titlesArray) => [...titlesArray, titleData.title]);
-    setContentsArray((contentsArray) => [...contentsArray, titleData.content]);
+    setTitles((titlesArray) => [...titlesArray, titleData.title.trim()]);
+    setContentsArray((contentsArray) => [...contentsArray, titleData.content.trim()]);
     setTitleData(defaultTitleData);
   };
 
